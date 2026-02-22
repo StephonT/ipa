@@ -1,0 +1,17 @@
+---
+- name: Playbook to configure IPA clients with username/password
+  hosts: ipaclients
+  become: true
+  pre_tasks:
+    - name: Copy /etc/hosts file to hosts
+      become: true
+      ansible.builtin.copy:
+        src: /etc/hosts
+        dest: /etc/hosts
+        mode: '0644'
+        owner: root
+        group: root
+
+  roles:
+  - role: freeipa.ansible_freeipa.ipaclient
+    state: present
